@@ -1,0 +1,64 @@
+# ============================== Create and map papers to review =============================
+
+DO $$
+DECLARE
+    review_id INTEGER := 10;
+    paper_id INTEGER;
+BEGIN
+    FOR paper_id IN 1..15 LOOP
+        -- Insert into the Paper table
+        INSERT INTO paper (paper_id, title, abstract)
+        VALUES (paper_id, 'Title ' || paper_id, 'Abstract ' || paper_id);
+
+        -- Insert into the Tagging table
+        INSERT INTO tagging (
+            review_id, 
+            paper_id, 
+            neutrino_review_llm_tag, 
+            tokens_used_by_llm, 
+            has_been_reviewed_by_user, 
+            exclusion_reason
+        )
+        VALUES (
+            review_id,
+            paper_id,
+            0,          -- neutrino_review_llm_tag
+            0,          -- tokens_used_by_llm
+            FALSE,      -- has_been_reviewed_by_user
+            NULL        -- exclusion_reason
+        );
+    END LOOP;
+END
+$$;
+
+# ============================== Map papers to review =============================
+DO $$
+DECLARE
+    review_id INTEGER := 16;
+    paper_id INTEGER;
+BEGIN
+    FOR paper_id IN 1..5 LOOP
+        -- Insert into the Tagging table
+        INSERT INTO tagging (
+            review_id,
+            paper_id,
+            neutrino_review_llm_tag,
+            tokens_used_by_llm,
+            has_been_reviewed_by_user,
+            exclusion_reason
+        )
+        VALUES (
+            review_id,
+            paper_id,
+            0,          -- neutrino_review_llm_tag
+            0,          -- tokens_used_by_llm
+            FALSE,      -- has_been_reviewed_by_user
+            NULL        -- exclusion_reason
+        );
+    END LOOP;
+END
+$$;
+
+# ============================== Reset all neutrino_review_llm_tags to 0 =============================
+UPDATE tagging
+SET neutrino_review_llm_tag = 0;

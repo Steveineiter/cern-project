@@ -1,0 +1,2 @@
+UPGRADE_PIP_LATEST=true
+PYTHONPATH=$PYTHONPATH:/opt/app-root/backend/src

@@ -1,0 +1,9 @@
+env
+__pycache__
+CSV_files
+src/config.py
+src/authentication/config.py
+marios_static_backend.py
+workbench.py
+.venv
+venv
